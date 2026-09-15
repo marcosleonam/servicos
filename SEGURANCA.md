@@ -81,3 +81,17 @@ git.
 3. **Denúncia ativa**: achou clone, denuncia no Meta e no host da cópia.
 4. Se o volume de spam incomodar, trocar o link direto por um **intermediário
    com verificação** (um redirecionador seu que valida antes de encaminhar).
+
+## 5. Por que o agente de triagem não usa IA
+
+O site é estático (GitHub Pages). Um agente de IA de verdade rodando aqui
+exigiria a chave da API dentro do JavaScript entregue ao navegador — e não
+existe jeito de esconder: o navegador precisa ler a chave pra usá-la, então
+qualquer visitante abre o F12, copia e sai gastando crédito na conta do Marcos.
+
+Por isso o `Agente.jsx` é 100% roteirizado: perguntas e respostas fixas, nada
+sai da máquina do visitante, nenhuma requisição externa, nenhum segredo no
+pacote. Zero superfície de ataque e zero custo variável.
+
+O caminho pra IA de verdade, quando fizer sentido, é proxy na VPS: a chave fica
+no servidor, com limite de uso por IP e teto diário. Nunca no navegador.

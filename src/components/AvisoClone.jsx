@@ -3,7 +3,7 @@ import { dominioAutorizado } from "../contato";
 // Se a página estiver rodando fora dos domínios autorizados, é cópia.
 // A tarja avisa o visitante e leva pro site verdadeiro — em vez de o clonador
 // colher o lead com o material dos outros.
-const OFICIAL = "https://marcosleonam.github.io/agentes-atendimento/";
+const OFICIAL = "https://marcosleonam.github.io/servicos/";
 
 export default function AvisoClone() {
   if (dominioAutorizado()) return null;

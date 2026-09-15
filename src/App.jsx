@@ -1,9 +1,8 @@
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
-import Dor from "./components/Dor";
-import Solucao from "./components/Solucao";
+import Servicos from "./components/Servicos";
+import PorQue from "./components/PorQue";
 import Como from "./components/Como";
-import LeadForm from "./components/LeadForm";
 import FAQ from "./components/FAQ";
 import CTAFinal from "./components/CTAFinal";
 import Footer from "./components/Footer";
@@ -17,10 +16,9 @@ export default function App() {
       <main className="min-h-screen grade-fina">
         <Hero />
         <Marquee />
-        <Dor />
-        <Solucao />
+        <Servicos />
+        <PorQue />
         <Como />
-        <LeadForm />
         <FAQ />
         <CTAFinal />
       </main>

@@ -24,7 +24,7 @@ const decodificar = (s) =>
 const COD = {
   zap: "bm5iY2JjamlobmhraQ==",
   mail: "NjopODQoNz40NTo2amJjbRs8NjoyN3U4NDY=",
-  msg: "FDczPjJ7KC46eyuY+jwyNTp7PnsqLj4pNHsoOjk+KXs2OjIoeyg0OSk+ezo8PjUvPih7Pz57Oi8+NT8yNj41LzQ=",
+  msg: "DTI2eys+NzR7KDIvPnV7Ci4+KTR7PTo3Oil7ODQ2ey00OJjxeyg0OSk+ezQoeyg+Lih7KD4pLTKY/DQodQ==",
   insta: "NjopODQoNz40NTo2ag==",
 };
 

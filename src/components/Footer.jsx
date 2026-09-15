@@ -36,7 +36,7 @@ export default function Footer() {
     <footer className="border-t border-line py-12">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 text-center">
         <p className="display text-2xl">{site.nome}</p>
-        {site.cidade && <p className="text-sm text-white/50">{site.cidade}</p>}
+        <p className="text-sm text-white/50">{site.papel}</p>
         <Email />
         {autorizado && (
           <a

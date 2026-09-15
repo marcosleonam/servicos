@@ -1,23 +1,30 @@
-const PALAVRAS = [
-  "responde em 3 segundos",
-  "24h por dia",
-  "nunca falta",
-  "não tira férias",
-  "qualifica sozinho",
-  "não esquece follow-up",
-  "atende no domingo",
-  "escala sem contratar",
+const ITENS = [
+  "Meta Ads",
+  "Google Ads",
+  "TikTok Ads",
+  "Sites que convertem",
+  "Agentes de IA no WhatsApp",
+  "Relatório que você entende",
 ];
 
+// Faixa em movimento: separa as dobras e repete o vocabulário da oferta sem
+// ocupar uma seção inteira. O conteúdo é duplicado porque a animação desloca
+// metade da faixa — assim o loop não mostra buraco.
 export default function Marquee() {
-  const fita = [...PALAVRAS, ...PALAVRAS];
+  const linha = [...ITENS, ...ITENS];
   return (
-    <div className="border-y border-line bg-ink-2/60 py-4 overflow-hidden" aria-hidden="true">
+    <div
+      aria-hidden="true"
+      className="overflow-hidden border-y border-line bg-ink-2/40 py-4"
+    >
       <div className="marquee-track">
-        {fita.map((p, i) => (
-          <span key={i} className="etiqueta flex items-center text-xs text-white/45 sm:text-sm">
-            <span className="px-6">{p}</span>
-            <span className="text-accent">/</span>
+        {linha.map((t, i) => (
+          <span
+            key={i}
+            className="etiqueta flex items-center gap-8 px-8 text-[11px] text-white/30"
+          >
+            {t}
+            <span className="text-accent/50">◆</span>
           </span>
         ))}
       </div>

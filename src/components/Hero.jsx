@@ -1,95 +1,114 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import fotoEspera from "../img/espera.jpg";
-import CTAButton from "./CTAButton";
+import Agente from "./Agente";
+import retrato from "../img/marcos.jpg";
+import { site } from "../config";
 
-// Cronômetro que sobe desde que a página abriu. É o argumento da página
-// acontecendo ao vivo: quanto tempo o visitante já está esperando.
-function Cronometro() {
-  const [s, setS] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setS((v) => v + 1), 1000);
-    return () => clearInterval(t);
-  }, []);
-  const mm = String(Math.floor(s / 60)).padStart(2, "0");
-  const ss = String(s % 60).padStart(2, "0");
-  return (
-    <div className="inline-flex items-baseline gap-3 rounded-2xl border border-line bg-ink-2/80 px-5 py-4 backdrop-blur">
-      <span className="etiqueta text-[11px] text-white/45">Você está nesta página há</span>
-      <span className="font-mono text-2xl font-medium tabular-nums text-accent">
-        {mm}:{ss}
-      </span>
-    </div>
-  );
-}
+const surge = {
+  hidden: { opacity: 0, y: 22 },
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", delay: 0.06 * i },
+  }),
+};
 
 export default function Hero() {
   return (
-    <header className="relative isolate min-h-[100svh] overflow-hidden">
-      {/* foto */}
-      <div className="absolute inset-0 -z-20">
-        <img
-          src={fotoEspera}
-          alt="Mulher ao telefone com a mão no rosto, esperando ser atendida"
-          className="foto-campanha h-full w-full object-cover object-[58%_22%]"
-        />
-      </div>
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(8,9,11,.80)_0%,rgba(8,9,11,.30)_26%,rgba(8,9,11,.72)_62%,rgba(8,9,11,.97)_88%,#08090B_100%)]" />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,9,11,.78)_0%,transparent_58%)]" />
+    <section className="relative overflow-hidden px-6 pb-14 pt-16 md:pb-20 md:pt-24">
+      {/* brilho difuso atrás do bloco — profundidade sem imagem de fundo */}
+      <div
+        aria-hidden="true"
+        className="brilho-azul pointer-events-none absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 opacity-70 blur-[2px]"
+      />
 
-      <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col px-6 pb-14 pt-8">
-        <div className="flex items-baseline justify-between">
-          <span className="etiqueta text-[11px] text-white/60 sm:text-xs">
-            Atendimento que não dorme
-          </span>
-          <span className="etiqueta hidden text-[11px] text-accent sm:inline sm:text-xs">
-            00:01:30 de espera
-          </span>
-        </div>
-
-        <div className="mt-auto max-w-4xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="display text-[2.15rem] leading-[0.94] xs:text-[2.6rem] sm:text-6xl lg:text-7xl"
-          >
-            Se você não gosta<br />de esperar atendimento,<br />seu cliente também não.
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
-            className="mt-6 max-w-2xl text-lg text-accent sm:text-xl"
-          >
-            Esperar "um minutinho" está fora de cogitação no mercado atual.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.24 }}
-            className="mt-5 max-w-xl text-base text-white/65"
-          >
-            Um agente de IA atende em 3 segundos, 24 horas por dia, qualifica o lead
-            e só passa pro seu time quem realmente quer comprar.
-          </motion.p>
-
-          <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-            <CTAButton>Quero ver funcionando</CTAButton>
-            <Cronometro />
-          </div>
-        </div>
-
-        <a
-          href="#dor"
-          className="mt-12 inline-flex items-center gap-2 self-start text-sm text-white/45 transition-colors hover:text-accent focus-visible:outline-none focus-visible:text-accent"
+      <div className="relative mx-auto max-w-6xl">
+        <motion.p
+          variants={surge}
+          initial="hidden"
+          animate="show"
+          custom={0}
+          className="etiqueta text-[10px] text-accent-soft/80 sm:text-[11px]"
         >
-          <ArrowDown className="h-4 w-4" /> o que acontece enquanto ninguém responde
-        </a>
+          {site.papel}
+        </motion.p>
+
+        <motion.h1
+          variants={surge}
+          initial="hidden"
+          animate="show"
+          custom={1}
+          className="display mt-5 max-w-4xl text-[2.6rem] leading-[0.94] xs:text-5xl sm:text-6xl md:text-7xl"
+        >
+          Clique é fácil.
+          <br />
+          O difícil é{" "}
+          <span className="texto-degrade">o que vem depois.</span>
+        </motion.h1>
+
+        <motion.p
+          variants={surge}
+          initial="hidden"
+          animate="show"
+          custom={2}
+          className="mt-6 max-w-2xl text-base leading-relaxed text-white/65 sm:text-lg"
+        >
+          Meta, Google e TikTok pra trazer gente. Site e agente de IA pra não
+          perder ninguém que chegou. Sou eu que faço — você fala comigo, não com
+          um atendente da agência.
+        </motion.p>
+
+        <div className="mt-11 grid items-start gap-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] md:gap-10">
+          {/* retrato */}
+          <motion.div
+            variants={surge}
+            initial="hidden"
+            animate="show"
+            custom={3}
+            className="relative order-2 md:order-1"
+          >
+            <div
+              aria-hidden="true"
+              className="brilho-azul absolute -inset-6 opacity-60 blur-xl"
+            />
+            <div className="borda-viva relative overflow-hidden rounded-3xl bg-ink-2">
+              <img
+                src={retrato}
+                alt="Marcos Leonam"
+                width="1080"
+                height="1350"
+                loading="eager"
+                className="aspect-4/5 w-full object-cover object-top"
+              />
+              {/* o pé da foto se dissolve no fundo em vez de cortar reto */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink to-transparent"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-5">
+                <p className="display text-2xl leading-none">{site.nome}</p>
+                <p className="etiqueta mt-2 text-[10px] text-white/45">
+                  Meta Ads · Google Ads · TikTok Ads · Sites · Agentes de IA
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* agente de triagem */}
+          <motion.div
+            variants={surge}
+            initial="hidden"
+            animate="show"
+            custom={4}
+            className="order-1 md:order-2"
+          >
+            <p className="mb-3 text-sm text-white/45">
+              Não sabe por onde começar? Responde 3 perguntas — eu te digo o
+              caminho e já abro seu WhatsApp preenchido.
+            </p>
+            <Agente />
+          </motion.div>
+        </div>
       </div>
-    </header>
+    </section>
   );
 }
