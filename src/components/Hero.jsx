@@ -71,22 +71,27 @@ export default function Hero() {
               className="brilho-azul absolute -inset-6 opacity-60 blur-xl"
             />
             <div className="borda-viva relative overflow-hidden rounded-3xl bg-ink-2">
-              <img
-                src={retrato}
-                alt="Marcos Leonam"
-                width="1080"
-                height="1350"
-                loading="eager"
-                className="aspect-[4/3] w-full object-cover object-top sm:aspect-[16/10] md:aspect-[4/5]"
-              />
-              {/* o pé da foto se dissolve no fundo em vez de cortar reto */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink to-transparent"
-              />
-              <div className="absolute inset-x-0 bottom-0 p-5">
+              <div className="relative">
+                <img
+                  src={retrato}
+                  alt="Marcos Leonam"
+                  width="1080"
+                  height="1341"
+                  loading="eager"
+                  className="aspect-[5/4] w-full object-cover object-[center_22%] sm:aspect-[16/10] md:aspect-[4/5] md:object-[center_18%]"
+                />
+                {/* o pé da foto se dissolve na base do card em vez de cortar reto */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink-2 to-transparent"
+                />
+              </div>
+              {/* nome fora da imagem: em celular a legenda sobreposta caía em
+                  cima do rosto, e mudar o corte resolvia num tamanho e quebrava
+                  no outro */}
+              <div className="px-5 pb-5">
                 <p className="display text-2xl leading-none">{site.nome}</p>
-                <p className="etiqueta mt-2 text-[10px] text-white/45">
+                <p className="etiqueta mt-2 text-[10px] leading-relaxed text-white/45">
                   Meta Ads · Google Ads · TikTok Ads · Sites · Agentes de IA
                 </p>
               </div>
