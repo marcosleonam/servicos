@@ -14,6 +14,39 @@ serviço só). O link antigo continua no ar, mas não é mais divulgado.
 React 19 + Vite + Tailwind v4. Sem backend, sem chave de API, sem banco.
 Fontes hospedadas localmente (nada de Google Fonts).
 
+## Design system
+
+Preto + azul elétrico, derivado do template "creative-agency" (aura.build) que
+o Marcos mandou. A página de referência vive em **`/design-system.html`**
+(fonte em `public/design-system.html`, estilo em `public/ds/ds.css`): hero de
+demonstração, tipografia completa, cores com hex/rgb/hsl e regra de uso,
+componentes com animação, ícones e catálogo de animações.
+
+**O site e o design system compartilham os mesmos nomes de classe e de
+keyframe.** `src/index.css` é o espelho de `public/ds/ds.css` — mexeu num,
+mexe no outro, senão a página de referência deixa de descrever a página real.
+
+Três coisas do template foram deliberadamente trocadas:
+
+1. **O fundo animado do herói** era um projeto WebGL hospedado no Unicorn
+   Studio, na conta de um terceiro (o ID do projeto vinha no HTML). Aqui é CSS
+   + um canvas 2D próprios — mesmo efeito, nenhum servidor de fora.
+2. **O Tailwind por CDN em runtime** saiu. O visual foi trazido pro Tailwind
+   que o projeto já compila; nada bloqueia a primeira pintura e o CSP continua
+   fechado.
+3. **O vermelho `#ef233c`** virou azul `#2D7FFF` em todo o sistema.
+
+### Duas armadilhas que custaram tempo (não repita)
+
+- **`clip-path` zera o IntersectionObserver.** A animação de revelar em coluna
+  começava com `clip-path: inset(0 0 100% 0)`. Elemento clipado a zero tem área
+  zero, nunca é considerado visível, nunca recebe a classe que soltaria a
+  animação — ficava invisível pra sempre. O quadro inicial hoje clipa 88% e o
+  resto some por opacidade, que o observer ignora.
+- **`.card > * { position: relative }` quebrava filho absoluto.** A regra
+  existia só pra o conteúdo ficar acima do halo. Hoje o `.card` é um contexto
+  de empilhamento (`isolation: isolate`) e o halo vive em `z-index: -1`.
+
 ## O agente de triagem (`src/components/Agente.jsx`)
 
 Três perguntas roteirizadas em JavaScript puro — **não é IA**, e a decisão é

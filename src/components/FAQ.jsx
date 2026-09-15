@@ -1,27 +1,26 @@
 import { useState } from "react";
 import { faq } from "../config";
-import Section from "./Section";
+import Revelar from "./Revelar";
+import Icone from "./Icone";
 
-function Item({ p, r }) {
+function Item({ p, r, i }) {
   const [aberto, setAberto] = useState(false);
   return (
-    <div className="border-b border-line">
+    <Revelar atraso={Math.min(i + 1, 5)} className="border-b border-line">
       <button
         type="button"
         onClick={() => setAberto((v) => !v)}
         aria-expanded={aberto}
-        className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left transition-colors hover:text-accent-soft focus-visible:outline-none focus-visible:text-accent-soft"
+        className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left transition-colors hover:text-accent-soft focus-visible:text-accent-soft focus-visible:outline-none"
       >
-        <span className="text-base font-semibold sm:text-lg">{p}</span>
-        <span
-          aria-hidden="true"
+        <span className="display text-base sm:text-lg">{p}</span>
+        <Icone
+          nome="mais"
+          tamanho={18}
           className={
-            "shrink-0 text-xl text-accent transition-transform duration-300 " +
-            (aberto ? "rotate-45" : "")
+            "text-accent transition-transform duration-300 " + (aberto ? "rotate-45" : "")
           }
-        >
-          +
-        </span>
+        />
       </button>
       <div
         className={
@@ -29,28 +28,29 @@ function Item({ p, r }) {
           (aberto ? "grid-rows-[1fr] pb-5 opacity-100" : "grid-rows-[0fr] opacity-0")
         }
       >
-        <p className="overflow-hidden text-sm leading-relaxed text-white/60">
-          {r}
-        </p>
+        <p className="overflow-hidden text-sm leading-relaxed text-white/60">{r}</p>
       </div>
-    </div>
+    </Revelar>
   );
 }
 
 export default function FAQ() {
   return (
-    <Section id="faq" className="px-6">
+    <section id="faq" className="secao px-6 py-20 md:py-28">
       <div className="mx-auto max-w-3xl">
-        <p className="etiqueta text-[10px] text-accent-soft/70">Perguntas</p>
-        <h2 className="display mt-4 text-4xl sm:text-5xl">
-          O que sempre me perguntam
-        </h2>
+        <Revelar as="p" anim="anim-lado" className="etiqueta text-accent-soft/70">
+          04 — Perguntas
+        </Revelar>
+        <Revelar as="h2" className="display mt-5 text-4xl sm:text-5xl">
+          <span className="letra-vazada">O que sempre</span>{" "}
+          <span className="letra-vazada chave">me perguntam</span>
+        </Revelar>
         <div className="mt-8">
-          {faq.map((f) => (
-            <Item key={f.p} p={f.p} r={f.r} />
+          {faq.map((f, i) => (
+            <Item key={f.p} p={f.p} r={f.r} i={i} />
           ))}
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

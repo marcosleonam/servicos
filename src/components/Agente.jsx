@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Icone from "./Icone";
 import { abrirWhatsApp } from "../contato";
 import { PREFIXO } from "../config";
 
@@ -161,13 +161,17 @@ export default function Agente() {
   const concluido = etapa === 3 && resumo;
 
   return (
-    <div className="borda-viva relative overflow-hidden rounded-3xl bg-ink-2/85 p-5 backdrop-blur-sm sm:p-7">
+    <div
+      className="card relative overflow-hidden p-5 sm:p-7"
+      style={{
+        "--borda-degrade":
+          "linear-gradient(140deg, rgba(45,127,255,0.6), rgba(20,214,255,0.2) 45%, transparent 78%)",
+        "--borda-raio": "22px",
+      }}
+    >
       {/* cabeçalho */}
       <div className="flex items-center gap-3 border-b border-line pb-4">
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
-        </span>
+        <span className="ponto" />
         <p className="etiqueta text-[10px] text-white/60">
           Agente de triagem — online
         </p>
@@ -183,22 +187,15 @@ export default function Agente() {
             key={i}
             className={
               "h-[3px] flex-1 rounded-full transition-colors duration-500 " +
-              (etapa > i ? "bg-accent" : "bg-line")
+              (etapa > i ? "bg-accent shadow-[0_0_12px_rgba(45,127,255,0.8)]" : "bg-line")
             }
           />
         ))}
       </div>
 
       <div className="mt-6 min-h-[248px] sm:min-h-[228px]">
-        <AnimatePresence mode="wait">
-          {!concluido ? (
-            <motion.div
-              key={`p-${etapa}`}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.28, ease: "easeOut" }}
-            >
+        {!concluido ? (
+          <div key={`p-${etapa}`} className="anim-surgir">
               <p
                 className="text-lg font-semibold leading-snug text-white sm:text-xl"
                 aria-live="polite"
@@ -222,9 +219,11 @@ export default function Agente() {
                       className="group flex w-full items-center justify-between gap-3 rounded-xl border border-line bg-ink-3/60 px-4 py-3 text-left text-[15px] text-white/85 transition-all duration-200 hover:border-accent/60 hover:bg-ink-3 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                     >
                       {o.rotulo}
-                      <span className="text-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                        →
-                      </span>
+                      <Icone
+                        nome="seta"
+                        tamanho={15}
+                        className="text-accent opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+                      />
                     </button>
                   ))}
                 </div>
@@ -239,14 +238,9 @@ export default function Agente() {
                   voltar
                 </button>
               )}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="fim"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
+          </div>
+        ) : (
+          <div key="fim" className="anim-surgir">
               <p className="text-[15px] leading-relaxed text-white/85">
                 {veredito(r1, r2, r3)}
               </p>
@@ -274,9 +268,12 @@ export default function Agente() {
               <button
                 type="button"
                 onClick={() => abrirWhatsApp(mensagem)}
-                className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-accent px-6 py-4 text-sm font-semibold uppercase tracking-[0.1em] text-white transition-shadow duration-300 hover:shadow-[0_14px_44px_rgba(45,127,255,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+                className="btn-brilhante mt-5 w-full justify-center"
               >
-                Falar comigo no WhatsApp
+                <span>
+                  Falar comigo no WhatsApp
+                  <Icone nome="seta" tamanho={16} />
+                </span>
               </button>
 
               <button
@@ -286,9 +283,8 @@ export default function Agente() {
               >
                 responder de novo
               </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          </div>
+        )}
       </div>
     </div>
   );
