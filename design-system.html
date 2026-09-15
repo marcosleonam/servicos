@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self';
+  style-src 'self' 'unsafe-inline';
+  font-src 'self';
+  img-src 'self' data:;
+  connect-src 'self';
+  form-action 'none';
+  base-uri 'none';
+  object-src 'none';
+  frame-src 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<title>Design System — Marcos Leonam</title>
+<meta name="description" content="Sistema visual preto e azul: tipografia, cores, componentes, ícones e animações usados no site marcosleonam.github.io/servicos." />
+<meta name="theme-color" content="#000000" />
+<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="preload" as="font" type="font/woff2" href="./ds/fontes/manrope-latin.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="./ds/fontes/inter-latin.woff2" crossorigin />
+<script src="./ds/js-on.js"></script>
+<link rel="stylesheet" href="./ds/ds.css" />
+</head>
+<body>
+
+<!-- ╔═══ SPRITE DE ÍCONES ═══════════════════════════════════════════╗ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-raio" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+  <symbol id="i-conversa" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 4 11.5a8.4 8.4 0 0 1 8.5-8.4h.5a8.4 8.4 0 0 1 8 8.4z"/></symbol>
+  <symbol id="i-alvo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+  <symbol id="i-camadas" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 14 9 5 9-5"/></symbol>
+  <symbol id="i-brilho" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol>
+  <symbol id="i-baixo" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-fora" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v7H4V6h7"/></symbol>
+  <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6l-8-3z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+</svg>
+
+<!-- ╔═══ FUNDO ══════════════════════════════════════════════════════╗ -->
+<div class="fundo-cena" aria-hidden="true">
+  <div class="fundo-varredura"></div>
+  <div class="fundo-mancha a"></div>
+  <div class="fundo-mancha b"></div>
+  <div class="fundo-mancha c"></div>
+  <div class="fundo-grade"></div>
+  <canvas id="particulas"></canvas>
+</div>
+<div class="blur-topo" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+<!-- ╔═══ NAVBAR ═════════════════════════════════════════════════════╗ -->
+<nav class="navbar" style="--borda-degrade: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0), rgba(255,255,255,0.18)); --borda-raio: 9999px">
+  <span class="marca">
+    <span class="marca-grade" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <strong style="font-family:var(--fonte-display);letter-spacing:-0.02em">Design System</strong>
+  </span>
+  <span class="links flex centro gap24" style="flex-wrap:wrap">
+    <a class="link" href="#tipografia">Tipografia</a>
+    <a class="link" href="#cores">Cores</a>
+    <a class="link" href="#componentes">Componentes</a>
+    <a class="link" href="#icones">Ícones</a>
+    <a class="link" href="#animacoes">Animações</a>
+  </span>
+  <a class="btn-orbita" href="./" style="min-width:0;height:42px;padding:0 18px">
+    <span class="orbita"></span><span class="miolo"></span><span class="brilho-pe"></span>
+    <span class="conteudo">Ver o site <svg class="icone icone-p"><use href="#i-seta"/></svg></span>
+  </a>
+</nav>
+
+<!-- ╔═══ 1. HERO ════════════════════════════════════════════════════╗ -->
+<header class="secao" style="min-height:100svh;display:flex;align-items:center;padding-top:150px;padding-bottom:80px;text-align:center;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 94%,transparent);mask-image:linear-gradient(180deg,#000 0%,#000 94%,transparent)">
+  <div class="secao-interna" style="max-width:980px">
+
+    <span class="badge anim-surgir atraso-1" style="--borda-degrade: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0), rgba(255,255,255,0.12)); --borda-raio: 9999px">
+      <span class="ponto"></span> Sistema vivo — tudo nesta página é código real
+    </span>
+
+    <h1 class="h-hero anim-surgir atraso-2 mt24" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0 0.26em">
+      <span class="letra-vazada">Um</span>
+      <span class="letra-vazada">sistema</span>
+      <span class="letra-vazada chave">preto</span>
+      <span class="letra-vazada">e</span>
+      <span class="letra-azul">azul</span>
+      <span class="letra-vazada">pra</span>
+      <span class="letra-vazada">vender</span>
+      <span class="letra-vazada">software,</span>
+      <span class="letra-vazada">não</span>
+      <span class="letra-vazada">enfeite.</span>
+    </h1>
+
+    <p class="corpo-g anim-surgir atraso-3 mt24" style="margin-left:auto;margin-right:auto;max-width:60ch">
+      Tipografia, cor, componente, ícone e animação — definidos uma vez e usados
+      em todo lugar. Esta primeira dobra existe pra provar que o sistema funciona:
+      cada efeito aqui é uma classe que você vai reencontrar lá embaixo.
+    </p>
+
+    <div class="anim-surgir atraso-4 mt32 flex centro gap16" style="justify-content:center;flex-wrap:wrap">
+      <a class="btn-brilhante" href="#componentes">
+        <span>Ver os componentes <svg class="icone icone-p"><use href="#i-seta"/></svg></span>
+      </a>
+      <a class="btn-orbita" href="#tipografia">
+        <span class="orbita"></span><span class="miolo"></span><span class="brilho-pe"></span>
+        <span class="conteudo">Começar pela base <svg class="icone icone-p"><use href="#i-baixo"/></svg></span>
+      </a>
+    </div>
+
+    <!-- provinha de capacidades: três cartões que já usam o sistema -->
+    <div class="grade g3 mt48" style="text-align:left">
+      <article class="card card-luz anim-coluna atraso-5" style="--borda-degrade: linear-gradient(140deg, rgba(45,127,255,0.55), transparent 60%); --borda-raio: 22px">
+        <span class="icone-caixa"><svg class="icone"><use href="#i-raio"/></svg></span>
+        <h3 class="h4 mt16">Movimento com propósito</h3>
+        <p class="corpo-p mt8">Toda entrada usa a mesma curva e o mesmo desfoque. O olho aprende o ritmo da página em três segundos.</p>
+      </article>
+      <article class="card card-luz anim-coluna atraso-6" style="--borda-degrade: linear-gradient(140deg, rgba(20,214,255,0.45), transparent 60%); --borda-raio: 22px">
+        <span class="icone-caixa"><svg class="icone"><use href="#i-alvo"/></svg></span>
+        <h3 class="h4 mt16">Uma cor de ação só</h3>
+        <p class="corpo-p mt8">Azul significa "clique aqui". Não decora título, não pinta ícone à toa — se está azul, é porque leva a algum lugar.</p>
+      </article>
+      <article class="card card-luz anim-coluna atraso-7" style="--borda-degrade: linear-gradient(140deg, rgba(255,255,255,0.28), transparent 60%); --borda-raio: 22px">
+        <span class="icone-caixa"><svg class="icone"><use href="#i-escudo"/></svg></span>
+        <h3 class="h4 mt16">Nada de terceiros</h3>
+        <p class="corpo-p mt8">Fonte, ícone e fundo animado moram neste domínio. Sem CDN, sem WebGL de fora, sem pedir permissão pra ninguém.</p>
+      </article>
+    </div>
+
+  </div>
+</header>
+
+<div class="faixa" aria-hidden="true">
+  <div class="faixa-trilho">
+    <span class="rotulo" style="padding:14px 28px">Manrope · display</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">Inter · texto</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">#2D7FFF · ação</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">#14D6FF · brilho</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">surgir 1s</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">Manrope · display</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">Inter · texto</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">#2D7FFF · ação</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">#14D6FF · brilho</span><span class="rotulo" style="color:var(--azul)">◆</span>
+    <span class="rotulo" style="padding:14px 28px">surgir 1s</span><span class="rotulo" style="color:var(--azul)">◆</span>
+  </div>
+</div>
+
+<!-- ╔═══ 2. TIPOGRAFIA ══════════════════════════════════════════════╗ -->
+<section class="secao" id="tipografia">
+  <div class="secao-interna">
+    <p class="rotulo no-scroll anim-lado">02 — Tipografia</p>
+    <h2 class="h2 mt16 no-scroll anim-surgir">Duas famílias. <span class="letra-azul">Nenhuma terceira.</span></h2>
+    <p class="corpo mt16 max60 no-scroll anim-surgir atraso-1">
+      Manrope carrega o display porque tem tracking negativo que fecha bem em
+      caixa mista — é o que faz título grande parecer produto, não cartaz.
+      Inter carrega o texto porque foi desenhada pra tela pequena. Mono só em
+      rótulo e dado.
+    </p>
+
+    <div class="grade g3 mt32">
+      <div class="card no-scroll anim-coluna">
+        <p class="rotulo">Primária — display</p>
+        <p class="mt12" style="font-family:var(--fonte-display);font-size:2.4rem;font-weight:600;letter-spacing:-0.03em;line-height:1">Manrope</p>
+        <p class="mono texto-3 mt12">"Manrope", ui-sans-serif, system-ui, sans-serif</p>
+        <p class="corpo-p mt12">Pesos 400–800 · variável · woff2 local · latin + latin-ext</p>
+      </div>
+      <div class="card no-scroll anim-coluna atraso-1">
+        <p class="rotulo">Secundária — texto</p>
+        <p class="mt12" style="font-family:var(--fonte-texto);font-size:2.4rem;font-weight:500;letter-spacing:-0.02em;line-height:1">Inter</p>
+        <p class="mono texto-3 mt12">"Inter", ui-sans-serif, system-ui, sans-serif</p>
+        <p class="corpo-p mt12">Pesos 400–700 · variável · woff2 local · latin + latin-ext</p>
+      </div>
+      <div class="card no-scroll anim-coluna atraso-2">
+        <p class="rotulo">Monoespaçada — dado</p>
+        <p class="mt12 mono" style="font-size:2.1rem;line-height:1">0123 · R$</p>
+        <p class="mono texto-3 mt12">ui-monospace, SFMono-Regular, JetBrains Mono, monospace</p>
+        <p class="corpo-p mt12">Pilha do sistema: zero download, some no fallback sem quebrar o ritmo.</p>
+      </div>
+    </div>
+
+    <p class="rotulo mt48 no-scroll anim-lado">Carregamento</p>
+    <p class="corpo mt8 max60 no-scroll anim-surgir">
+      Os dois arquivos são servidos por este domínio com <span class="mono">font-display: swap</span>
+      e <span class="mono">preload</span> no latin. Nada vai pro Google: fonte por CDN
+      entrega o IP de cada visitante a um terceiro e obriga a afrouxar o CSP.
+    </p>
+
+    <!-- escala -->
+    <p class="rotulo mt48 no-scroll anim-lado">Escala completa</p>
+    <div class="mt16 no-scroll anim-surgir" style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;min-width:720px">
+        <thead>
+          <tr style="text-align:left">
+            <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Papel</th>
+            <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Família</th>
+            <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Peso</th>
+            <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Tamanho</th>
+            <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Entrelinha</th>
+            <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Tracking</th>
+            <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Caixa</th>
+          </tr>
+        </thead>
+        <tbody class="mono" style="color:var(--texto-2)">
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">.h-hero</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Manrope</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">500</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">clamp(2.6rem, 8vw, 6rem)</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.04</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">-0.035em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">h1</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Manrope</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">600</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">clamp(2.25rem, 5.4vw, 3.75rem)</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.08</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">-0.03em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">h2</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Manrope</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">600</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">clamp(1.9rem, 4.2vw, 3rem)</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.12</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">-0.028em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">h3</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Manrope</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">600</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">clamp(1.45rem, 2.6vw, 1.95rem)</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.20</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">-0.022em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">h4</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Manrope</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">600</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.25rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.30</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">-0.015em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">h5</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Manrope</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">600</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.0625rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.40</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">-0.01em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">h6</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Manrope</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">700</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0.9375rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.45</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">.corpo-g</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Inter</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">400</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.1875rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.65</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">-0.005em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">.corpo</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Inter</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">400</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.65</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">.corpo-p</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Inter</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">400</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0.875rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.60</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">.legenda</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Inter</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">400</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0.8125rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.50</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0.005em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">none</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)"><span style="color:var(--azul-300)">.rotulo</span></td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Mono</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">500</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0.6875rem</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">1.40</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">0.18em</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">uppercase</td></tr>
+          <tr><td style="padding:11px 10px"><span style="color:var(--azul-300)">.ajuda</span></td><td style="padding:11px 10px">Inter</td><td style="padding:11px 10px">400</td><td style="padding:11px 10px">0.8125rem</td><td style="padding:11px 10px">1.50</td><td style="padding:11px 10px">0</td><td style="padding:11px 10px">none</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- amostras -->
+    <div class="grade g2 mt48">
+      <div class="card no-scroll anim-surgir">
+        <p class="rotulo">Amostra viva</p>
+        <p class="h1 mt16">Heading 1</p>
+        <p class="h2 mt12">Heading 2</p>
+        <p class="h3 mt12">Heading 3</p>
+        <p class="h4 mt12">Heading 4</p>
+        <p class="h5 mt12">Heading 5</p>
+        <p class="h6 mt12">Heading 6</p>
+      </div>
+      <div class="card no-scroll anim-surgir atraso-1">
+        <p class="rotulo">Texto e apoio</p>
+        <p class="corpo-g mt16">Corpo grande — abre seção e sustenta a promessa.</p>
+        <p class="corpo mt12">Corpo padrão — é onde o argumento acontece de verdade, com linha de 1.65 pra não cansar no celular.</p>
+        <p class="corpo-p mt12">Corpo pequeno — detalhe dentro de card.</p>
+        <p class="legenda mt12">Legenda — crédito, data, observação de rodapé.</p>
+        <p class="ajuda mt12">Ajuda — o que aparece embaixo de um campo de formulário.</p>
+        <p class="rotulo mt12">Rótulo monoespaçado</p>
+      </div>
+    </div>
+
+    <!-- lettering -->
+    <p class="rotulo mt48 no-scroll anim-lado">O lettering transparente</p>
+    <div class="card mt16 no-scroll anim-surgir" style="text-align:center;padding:48px 26px">
+      <p class="h-hero" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0 0.26em;font-size:clamp(2rem,5vw,3.4rem)">
+        <span class="letra-vazada">palavra</span>
+        <span class="letra-vazada chave">chave</span>
+        <span class="letra-vazada">em</span>
+        <span class="letra-azul">duas</span>
+        <span class="letra-vazada">camadas</span>
+      </p>
+      <p class="corpo-p mt24 max60" style="margin:24px auto 0">
+        A letra é recortada de um degradê que vai de branco sólido a branco 42% —
+        a palavra apaga de cima pra baixo. As secundárias ficam em opacidade 55%;
+        só a palavra-chave vai a 100%. Duas camadas de leitura com uma cor só.
+        Classes: <span class="mono" style="color:var(--azul-300)">.letra-vazada</span>,
+        <span class="mono" style="color:var(--azul-300)">.letra-vazada.chave</span>,
+        <span class="mono" style="color:var(--azul-300)">.letra-azul</span>,
+        <span class="mono" style="color:var(--azul-300)">.letra-contorno</span>.
+      </p>
+      <p class="letra-contorno mt24" style="font-size:4rem;line-height:1">2026</p>
+    </div>
+  </div>
+</section>
+
+<hr class="regua" />
+
+<!-- ╔═══ 3. CORES ═══════════════════════════════════════════════════╗ -->
+<section class="secao" id="cores">
+  <div class="secao-interna">
+    <p class="rotulo no-scroll anim-lado">03 — Sistema de cores</p>
+    <h2 class="h2 mt16 no-scroll anim-surgir">Preto que <span class="letra-azul">puxa pro azul</span></h2>
+    <p class="corpo mt16 max60 no-scroll anim-surgir atraso-1">
+      O fundo não é cinza neutro: tem azul dentro. É isso que faz o azul de ação
+      parecer da mesma família em vez de colado por cima. Regra única e inegociável:
+      <strong style="color:var(--texto)">azul só em coisa clicável</strong>.
+    </p>
+
+    <p class="rotulo mt32 no-scroll anim-lado">Neutros</p>
+    <div class="grade g4 mt16">
+      <div class="card no-scroll anim-escala" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#000000"></div>
+        <div style="padding:16px"><p class="h6">Preto</p><p class="mono texto-3 mt8">#000000<br />rgb(0,0,0)<br />hsl(0,0%,0%)</p><p class="legenda mt8">Fundo da página. Papel: neutro.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-1" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#05070C"></div>
+        <div style="padding:16px"><p class="h6">Tinta</p><p class="mono texto-3 mt8">#05070C<br />rgb(5,7,12)<br />hsl(223,41%,3%)</p><p class="legenda mt8">Base de seção e pé de card.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-2" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#0A0E16"></div>
+        <div style="padding:16px"><p class="h6">Tinta 2</p><p class="mono texto-3 mt8">#0A0E16<br />rgb(10,14,22)<br />hsl(220,38%,6%)</p><p class="legenda mt8">Superfície: card, campo, painel.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-3" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#111725"></div>
+        <div style="padding:16px"><p class="h6">Tinta 3</p><p class="mono texto-3 mt8">#111725<br />rgb(17,23,37)<br />hsl(222,37%,11%)</p><p class="legenda mt8">Superfície elevada: hover, chip.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#1A2233"></div>
+        <div style="padding:16px"><p class="h6">Tinta 4</p><p class="mono texto-3 mt8">#1A2233<br />rgb(26,34,51)<br />hsl(219,32%,15%)</p><p class="legenda mt8">Tooltip, badge neutro.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-1" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#1E2736"></div>
+        <div style="padding:16px"><p class="h6">Linha</p><p class="mono texto-3 mt8">#1E2736<br />rgb(30,39,54)<br />hsl(217,29%,16%)</p><p class="legenda mt8">Borda em repouso.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-2" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#2B3850"></div>
+        <div style="padding:16px"><p class="h6">Linha forte</p><p class="mono texto-3 mt8">#2B3850<br />rgb(43,56,80)<br />hsl(218,30%,24%)</p><p class="legenda mt8">Borda em hover, divisor.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-3" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#F2F6FC"></div>
+        <div style="padding:16px"><p class="h6">Texto</p><p class="mono texto-3 mt8">#F2F6FC<br />rgb(242,246,252)<br />hsl(216,63%,97%)</p><p class="legenda mt8">Contraste 19.4:1 no preto — AAA.</p></div>
+      </div>
+    </div>
+
+    <p class="rotulo mt48 no-scroll anim-lado">Azul — a cor de ação</p>
+    <div class="grade g4 mt16">
+      <div class="card no-scroll anim-escala" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#A8C8FF"></div>
+        <div style="padding:16px"><p class="h6">Azul 300</p><p class="mono texto-3 mt8">#A8C8FF<br />rgb(168,200,255)<br />hsl(218,100%,83%)</p><p class="legenda mt8">Texto azul sobre preto. 11.9:1 — AAA.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-1" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#6BA3FF"></div>
+        <div style="padding:16px"><p class="h6">Azul 400</p><p class="mono texto-3 mt8">#6BA3FF<br />rgb(107,163,255)<br />hsl(217,100%,71%)</p><p class="legenda mt8">Link e botão de texto. 8.2:1 — AAA.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-2" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#2D7FFF"></div>
+        <div style="padding:16px"><p class="h6">Azul — primária</p><p class="mono texto-3 mt8">#2D7FFF<br />rgb(45,127,255)<br />hsl(216,100%,59%)</p><p class="legenda mt8">Preenchimento de botão, foco, ponto vivo.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-3" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#1B5FE0"></div>
+        <div style="padding:16px"><p class="h6">Azul 600</p><p class="mono texto-3 mt8">#1B5FE0<br />rgb(27,95,224)<br />hsl(219,79%,49%)</p><p class="legenda mt8">Estado ativo (pressionado).</p></div>
+      </div>
+      <div class="card no-scroll anim-escala" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#123FA0"></div>
+        <div style="padding:16px"><p class="h6">Azul 700</p><p class="mono texto-3 mt8">#123FA0<br />rgb(18,63,160)<br />hsl(221,80%,35%)</p><p class="legenda mt8">Sombra colorida e degradê profundo.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-1" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:#14D6FF"></div>
+        <div style="padding:16px"><p class="h6">Ciano — apoio</p><p class="mono texto-3 mt8">#14D6FF<br />rgb(20,214,255)<br />hsl(191,100%,54%)</p><p class="legenda mt8">Só em degradê e brilho. Nunca em texto corrido.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-2" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:linear-gradient(120deg,#A8C8FF,#14D6FF 65%,#2D7FFF)"></div>
+        <div style="padding:16px"><p class="h6">Degradê da marca</p><p class="mono texto-3 mt8">120deg · azul300 → ciano 65% → azul</p><p class="legenda mt8">Palavra-chave, borda viva, halo.</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-3" style="padding:0;overflow:hidden">
+        <div style="height:92px;background:conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 78%, #2D7FFF 94%, #14D6FF 100%)"></div>
+        <div style="padding:16px"><p class="h6">Cônico de borda</p><p class="mono texto-3 mt8">conic-gradient · 4s linear</p><p class="legenda mt8">A órbita que gira nos botões.</p></div>
+      </div>
+    </div>
+
+    <p class="rotulo mt48 no-scroll anim-lado">Feedback</p>
+    <div class="grade g3 mt16">
+      <div class="card no-scroll anim-escala" style="padding:0;overflow:hidden">
+        <div style="height:72px;background:#22C58B"></div>
+        <div style="padding:16px"><p class="h6">Sucesso</p><p class="mono texto-3 mt8">#22C58B · rgb(34,197,139) · hsl(159,71%,45%)</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-1" style="padding:0;overflow:hidden">
+        <div style="height:72px;background:#F5B544"></div>
+        <div style="padding:16px"><p class="h6">Atenção</p><p class="mono texto-3 mt8">#F5B544 · rgb(245,181,68) · hsl(38,90%,61%)</p></div>
+      </div>
+      <div class="card no-scroll anim-escala atraso-2" style="padding:0;overflow:hidden">
+        <div style="height:72px;background:#FF4D5E"></div>
+        <div style="padding:16px"><p class="h6">Erro</p><p class="mono texto-3 mt8">#FF4D5E · rgb(255,77,94) · hsl(354,100%,65%)</p></div>
+      </div>
+    </div>
+
+    <p class="rotulo mt48 no-scroll anim-lado">Variantes de opacidade do texto</p>
+    <div class="card mt16 no-scroll anim-surgir">
+      <p style="color:var(--texto)">100% — título e frase que precisa ser lida.</p>
+      <p class="mt8" style="color:var(--texto-2)">62% — texto corrido. É o padrão de leitura do site.</p>
+      <p class="mt8" style="color:var(--texto-3)">40% — rótulo, legenda, apoio.</p>
+      <p class="mt8" style="color:var(--texto-4)">24% — placeholder e índice decorativo. Abaixo disso não vale escrever.</p>
+    </div>
+
+    <p class="rotulo mt48 no-scroll anim-lado">Regras de uso por contexto</p>
+    <div class="mt16 no-scroll anim-surgir" style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;min-width:640px">
+        <thead><tr style="text-align:left">
+          <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Contexto</th>
+          <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Cor</th>
+          <th class="rotulo" style="padding:12px 10px;border-bottom:1px solid var(--linha-forte)">Observação</th>
+        </tr></thead>
+        <tbody class="corpo-p">
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Texto</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)" class="mono">--texto / --texto-2</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Azul em texto só em link. Título azul confunde com botão.</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Fundo</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)" class="mono">--preto / --tinta-2</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Card sempre uma tinta acima da seção que o contém.</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Borda</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)" class="mono">--linha</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Vira --linha-forte no hover; vira azul só quando o elemento está ativo.</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Hover</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)" class="mono">azul 8–18% + translateY(-2px)</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Muda luz e posição, nunca o tamanho do texto.</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Ativo</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)" class="mono">--azul-600 + scale(0.97)</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Afunda. É o único lugar onde a escala diminui.</td></tr>
+          <tr><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Foco</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)" class="mono">ring azul 4px @16%</td><td style="padding:11px 10px;border-bottom:1px solid var(--linha)">Sempre visível no teclado. Nunca remover o outline sem trocar por isto.</td></tr>
+          <tr><td style="padding:11px 10px">Desabilitado</td><td style="padding:11px 10px" class="mono">opacity .35</td><td style="padding:11px 10px">Sem cor de ação e sem cursor de clique.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card card-tracejado mt32 no-scroll anim-surgir">
+      <p class="h5">Intenção de contraste</p>
+      <p class="corpo-p mt8">
+        Texto principal e azul 300/400 passam em AAA sobre preto. O azul primário
+        #2D7FFF tem 4.6:1 — passa em AA para texto grande e para preenchimento de
+        botão com rótulo branco, mas <strong style="color:var(--texto)">não</strong>
+        serve para texto pequeno sobre fundo escuro. Para isso existe o azul 400.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="regua" />
+
+<!-- ╔═══ 4. COMPONENTES ═════════════════════════════════════════════╗ -->
+<section class="secao" id="componentes">
+  <div class="secao-interna">
+    <p class="rotulo no-scroll anim-lado">04 — Componentes</p>
+    <h2 class="h2 mt16 no-scroll anim-surgir">Peças que já vêm <span class="letra-azul">com movimento</span></h2>
+    <p class="corpo mt16 max60 no-scroll anim-surgir atraso-1">
+      Nenhum componente aqui precisa de animação adicional: hover, foco, ativo e
+      entrada já estão embutidos. Passe o mouse em tudo.
+    </p>
+
+    <!-- botões -->
+    <p class="rotulo mt48 no-scroll anim-lado">Botões</p>
+    <div class="card mt16 no-scroll anim-surgir">
+      <div class="flex centro envolve gap24">
+        <a class="btn-brilhante" href="#componentes"><span>Brilhante <svg class="icone icone-p"><use href="#i-seta"/></svg></span></a>
+        <button class="btn-orbita" type="button">
+          <span class="orbita"></span><span class="miolo"></span><span class="brilho-pe"></span>
+          <span class="conteudo">Órbita <svg class="icone icone-p"><use href="#i-seta"/></svg></span>
+        </button>
+        <button class="btn-fantasma" type="button">Fantasma</button>
+        <button class="btn-fantasma" type="button" disabled>Desabilitado</button>
+        <button class="btn-texto" type="button">Botão de texto <svg class="icone icone-p"><use href="#i-seta"/></svg></button>
+      </div>
+      <div class="grade g3 mt32">
+        <div><p class="h6">Brilhante</p><p class="corpo-p mt8">Ação principal da página. Um por dobra, nunca dois. Borda cônica girando 2.5s + poeira + shimmer + respiro.</p><p class="mono texto-3 mt8">.btn-brilhante</p></div>
+        <div><p class="h6">Órbita</p><p class="corpo-p mt8">Ação secundária com peso. A luz no pé abre no hover em 1.1s — o botão "acende" em vez de piscar.</p><p class="mono texto-3 mt8">.btn-orbita</p></div>
+        <div><p class="h6">Fantasma e texto</p><p class="corpo-p mt8">Terciários. Sobem 2px no hover e ganham borda azul. Estado desabilitado perde cor e cursor.</p><p class="mono texto-3 mt8">.btn-fantasma · .btn-texto</p></div>
+      </div>
+    </div>
+
+    <!-- campos -->
+    <p class="rotulo mt48 no-scroll anim-lado">Campos</p>
+    <div class="grade g2 mt16">
+      <div class="card no-scroll anim-surgir">
+        <label class="rotulo" for="c1">Rótulo do campo</label>
+        <input class="campo mt8" id="c1" type="text" placeholder="Digite alguma coisa" />
+        <p class="ajuda mt8">Texto de ajuda: diz o formato esperado antes do erro acontecer.</p>
+
+        <label class="rotulo mt24" for="c2" style="display:block">Campo com erro</label>
+        <input class="campo mt8" id="c2" type="email" aria-invalid="true" value="email@invalido" />
+        <p class="ajuda mt8" style="color:#FFB3BA">Esse e-mail não parece válido.</p>
+
+        <label class="rotulo mt24" for="c3" style="display:block">Desabilitado</label>
+        <input class="campo mt8" id="c3" type="text" value="Não editável" disabled />
+      </div>
+      <div class="card no-scroll anim-surgir atraso-1">
+        <label class="rotulo" for="c4">Área de texto</label>
+        <textarea class="campo mt8" id="c4" placeholder="Conta o seu cenário..."></textarea>
+        <p class="ajuda mt8">Altura mínima de 120px e redimensionamento só na vertical — arrastar na horizontal quebra a grade.</p>
+        <p class="corpo-p mt24">Foco: borda azul + anel de 4px a 16%. É o mesmo anel em todo componente focável do sistema, pra navegação por teclado ser previsível.</p>
+      </div>
+    </div>
+
+    <!-- cards -->
+    <p class="rotulo mt48 no-scroll anim-lado">Cards</p>
+    <div class="grade g3 mt16">
+      <article class="card card-luz no-scroll anim-coluna" style="--borda-degrade: linear-gradient(140deg, rgba(45,127,255,0.5), transparent 62%); --borda-raio: 22px">
+        <span class="icone-caixa"><svg class="icone"><use href="#i-camadas"/></svg></span>
+        <h3 class="h4 mt16">Card padrão</h3>
+        <p class="corpo-p mt8">Sobe 6px, ganha sombra azul e acende um halo vindo de baixo. A luz interna segue o cursor.</p>
+        <p class="mono texto-3 mt12">.card .card-luz</p>
+      </article>
+      <article class="card no-scroll anim-coluna atraso-1">
+        <span class="badge badge-solido">Sem borda viva</span>
+        <h3 class="h4 mt16">Card simples</h3>
+        <p class="corpo-p mt8">Mesma superfície, sem o anel em degradê. Serve quando há três ou mais lado a lado e a borda viraria ruído.</p>
+        <p class="mono texto-3 mt12">.card</p>
+      </article>
+      <article class="card-tracejado no-scroll anim-coluna atraso-2">
+        <h3 class="h4">Card tracejado</h3>
+        <p class="corpo-p mt8">Espaço vazio proposital: fecha uma grade ímpar ou anuncia o que ainda não existe, sem fingir que é conteúdo.</p>
+        <button class="btn-texto mt16" type="button">Ação secundária <svg class="icone icone-p"><use href="#i-seta"/></svg></button>
+      </article>
+    </div>
+
+    <!-- navbar -->
+    <p class="rotulo mt48 no-scroll anim-lado">Navbar</p>
+    <div class="card mt16 no-scroll anim-surgir">
+      <div class="flex centro entre envolve gap16" style="padding:8px 8px 8px 16px;border-radius:9999px;background:rgba(4,6,11,0.66);backdrop-filter:blur(16px);--borda-degrade: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0), rgba(255,255,255,0.18)); --borda-raio: 9999px;position:relative">
+        <span class="marca"><span class="marca-grade" aria-hidden="true"><i></i><i></i><i></i><i></i></span><strong style="font-family:var(--fonte-display)">Marca</strong></span>
+        <span class="flex centro gap24"><a class="link" href="#componentes" style="color:var(--texto-3);text-decoration:none;font-size:.875rem">Item</a><a class="link" href="#componentes" style="color:var(--texto-3);text-decoration:none;font-size:.875rem">Item</a></span>
+        <button class="btn-fantasma" type="button" style="height:38px;padding:0 16px">Ação</button>
+      </div>
+      <p class="corpo-p mt16">Flutuante, vidro, borda em degradê e sublinhado que nasce do centro com brilho azul. Acima dela, oito camadas de <span class="mono">backdrop-filter</span> fazem o conteúdo desfocar ao passar por baixo — o texto não some, ele borra.</p>
+      <p class="mono texto-3 mt8">.navbar · .blur-topo</p>
+    </div>
+
+    <!-- seções -->
+    <p class="rotulo mt48 no-scroll anim-lado">Seções</p>
+    <div class="grade g2 mt16">
+      <div class="card no-scroll anim-surgir">
+        <h3 class="h4">Anatomia</h3>
+        <p class="corpo-p mt8">Rótulo numerado → título com uma palavra em azul → parágrafo de no máximo 60 caracteres de largura → conteúdo. Sempre nessa ordem, pra pessoa saber onde está sem ler.</p>
+        <p class="mono texto-3 mt12">.secao · .secao-interna · .regua</p>
+      </div>
+      <div class="card no-scroll anim-surgir atraso-1">
+        <h3 class="h4">Fundo</h3>
+        <p class="corpo-p mt8">Toda seção carrega um brilho azul de 7% no topo via <span class="mono">::before</span>, e a cena de fundo (manchas + grade + varredura + partículas) atravessa a página inteira. Nenhuma dobra é um retângulo preto liso.</p>
+        <p class="mono texto-3 mt12">.fundo-cena · .fundo-mancha · .fundo-grade</p>
+      </div>
+    </div>
+
+    <!-- badges e tooltips -->
+    <div class="grade g2 mt48">
+      <div class="card no-scroll anim-surgir">
+        <p class="rotulo">Badges</p>
+        <div class="flex centro envolve gap12 mt16">
+          <span class="badge" style="--borda-degrade: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0)); --borda-raio: 9999px"><span class="ponto"></span> Vivo</span>
+          <span class="badge badge-solido">Destaque</span>
+          <span class="badge badge-ok"><svg class="icone icone-p"><use href="#i-check"/></svg> Sucesso</span>
+          <span class="badge badge-erro">Erro</span>
+          <span class="badge badge-neutro">Neutro</span>
+        </div>
+        <p class="corpo-p mt16">O ponto pulsa a cada 2.4s. Use "vivo" só quando for verdade — status falso destrói confiança mais rápido do que design feio.</p>
+        <p class="mono texto-3 mt8">.badge · .badge-solido · .badge-ok · .badge-erro · .badge-neutro</p>
+      </div>
+      <div class="card no-scroll anim-surgir atraso-1">
+        <p class="rotulo">Tooltips</p>
+        <div class="flex centro envolve gap24 mt24" style="padding-top:20px">
+          <span class="dica"><button class="btn-fantasma" type="button">Passe o mouse</button><span class="balao">Aparece em 220ms, sobe 5px</span></span>
+          <span class="dica"><span class="icone-caixa"><svg class="icone"><use href="#i-relogio"/></svg></span><span class="balao">Também funciona em ícone</span></span>
+        </div>
+        <p class="corpo-p mt24">Abre no hover e no foco por teclado. Nunca guarda informação essencial — quem está no celular não tem hover.</p>
+        <p class="mono texto-3 mt8">.dica > .balao</p>
+      </div>
+    </div>
+
+    <!-- modal -->
+    <p class="rotulo mt48 no-scroll anim-lado">Modal</p>
+    <div class="card mt16 no-scroll anim-surgir">
+      <button class="btn-orbita" type="button" data-abre-modal="modal-demo">
+        <span class="orbita"></span><span class="miolo"></span><span class="brilho-pe"></span>
+        <span class="conteudo">Abrir modal <svg class="icone icone-p"><use href="#i-fora"/></svg></span>
+      </button>
+      <p class="corpo-p mt16">Fundo escurece e desfoca, o painel entra com a mesma animação <span class="mono">surgir</span> do resto da página. Fecha no X, no clique fora e no Esc.</p>
+      <p class="mono texto-3 mt8">.modal-fundo · .modal · [data-abre-modal]</p>
+    </div>
+  </div>
+</section>
+
+<div class="modal-fundo" id="modal-demo" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+  <div class="modal" style="--borda-degrade: linear-gradient(140deg, rgba(45,127,255,0.55), transparent 62%); --borda-raio: 22px">
+    <div class="flex centro entre">
+      <h3 class="h4" id="modal-titulo">Modal do sistema</h3>
+      <button class="btn-texto" type="button" data-fecha-modal aria-label="Fechar"><svg class="icone"><use href="#i-x"/></svg></button>
+    </div>
+    <p class="corpo-p mt16">Mesma superfície, mesma borda viva, mesma curva de entrada. Um modal que parece de outro site é um modal que assusta.</p>
+    <div class="flex centro gap12 mt24">
+      <button class="btn-fantasma" type="button" data-fecha-modal>Cancelar</button>
+      <a class="btn-brilhante" href="#componentes" style="padding:0.8rem 1.6rem;font-size:.85rem"><span>Confirmar</span></a>
+    </div>
+  </div>
+</div>
+
+<hr class="regua" />
+
+<!-- ╔═══ 5. ÍCONES ══════════════════════════════════════════════════╗ -->
+<section class="secao" id="icones">
+  <div class="secao-interna">
+    <p class="rotulo no-scroll anim-lado">05 — Ícones</p>
+    <h2 class="h2 mt16 no-scroll anim-surgir">Traço de <span class="letra-azul">1.5px</span>, sempre</h2>
+    <p class="corpo mt16 max60 no-scroll anim-surgir atraso-1">
+      Desenho no estilo Lucide, mas embutido como <span class="mono">&lt;symbol&gt;</span>
+      no próprio HTML. Biblioteca de ícone por CDN quebra com CSP, pisca no
+      carregamento e adiciona um servidor de terceiro entre o visitante e a página.
+      Herdam <span class="mono">currentColor</span>, então mudam de cor junto com o texto.
+    </p>
+
+    <div class="grade g4 mt32">
+      <div class="card no-scroll anim-escala" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-seta"/></svg><p class="mono texto-3 mt12">#i-seta</p></div>
+      <div class="card no-scroll anim-escala atraso-1" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-check"/></svg><p class="mono texto-3 mt12">#i-check</p></div>
+      <div class="card no-scroll anim-escala atraso-2" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-raio"/></svg><p class="mono texto-3 mt12">#i-raio</p></div>
+      <div class="card no-scroll anim-escala atraso-3" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-conversa"/></svg><p class="mono texto-3 mt12">#i-conversa</p></div>
+      <div class="card no-scroll anim-escala" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-alvo"/></svg><p class="mono texto-3 mt12">#i-alvo</p></div>
+      <div class="card no-scroll anim-escala atraso-1" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-camadas"/></svg><p class="mono texto-3 mt12">#i-camadas</p></div>
+      <div class="card no-scroll anim-escala atraso-2" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-brilho"/></svg><p class="mono texto-3 mt12">#i-brilho</p></div>
+      <div class="card no-scroll anim-escala atraso-3" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-escudo"/></svg><p class="mono texto-3 mt12">#i-escudo</p></div>
+      <div class="card no-scroll anim-escala" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-relogio"/></svg><p class="mono texto-3 mt12">#i-relogio</p></div>
+      <div class="card no-scroll anim-escala atraso-1" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-baixo"/></svg><p class="mono texto-3 mt12">#i-baixo</p></div>
+      <div class="card no-scroll anim-escala atraso-2" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-fora"/></svg><p class="mono texto-3 mt12">#i-fora</p></div>
+      <div class="card no-scroll anim-escala atraso-3" style="text-align:center"><svg class="icone icone-g" style="margin:0 auto;color:var(--azul-400)"><use href="#i-x"/></svg><p class="mono texto-3 mt12">#i-x</p></div>
+    </div>
+
+    <div class="grade g3 mt32">
+      <div class="card no-scroll anim-surgir">
+        <p class="h5">Tamanhos</p>
+        <div class="flex centro gap16 mt16"><svg class="icone icone-p"><use href="#i-raio"/></svg><svg class="icone"><use href="#i-raio"/></svg><svg class="icone icone-g"><use href="#i-raio"/></svg></div>
+        <p class="mono texto-3 mt12">15px · 20px · 28px</p>
+      </div>
+      <div class="card no-scroll anim-surgir atraso-1">
+        <p class="h5">Caixa de ícone</p>
+        <div class="flex centro gap16 mt16"><span class="icone-caixa"><svg class="icone"><use href="#i-conversa"/></svg></span><span class="icone-caixa"><svg class="icone"><use href="#i-alvo"/></svg></span></div>
+        <p class="mono texto-3 mt12">.icone-caixa — sobe 3px e acende junto com o card</p>
+      </div>
+      <div class="card no-scroll anim-surgir atraso-2">
+        <p class="h5">Regra</p>
+        <p class="corpo-p mt8">Ícone acompanha rótulo; sozinho, só quando o desenho é universal (fechar, seta). Ícone decorativo leva <span class="mono">aria-hidden</span>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="regua" />
+
+<!-- ╔═══ 6. ANIMAÇÕES ═══════════════════════════════════════════════╗ -->
+<section class="secao" id="animacoes">
+  <div class="secao-interna">
+    <p class="rotulo no-scroll anim-lado">06 — Animações</p>
+    <h2 class="h2 mt16 no-scroll anim-surgir">Uma curva só: <span class="letra-azul">cubic-bezier(.16,1,.3,1)</span></h2>
+    <p class="corpo mt16 max60 no-scroll anim-surgir atraso-1">
+      Entrada rápida, saída longa. É a mesma curva em botão, card, modal e reveal —
+      por isso a página parece uma coisa só e não um catálogo de efeitos.
+      Cada bloco abaixo está animando de verdade.
+    </p>
+
+    <p class="rotulo mt32 no-scroll anim-lado">Surgimento</p>
+    <div class="grade g4 mt16">
+      <div class="card no-scroll anim-surgir"><p class="h6">surgir</p><p class="corpo-p mt8">30px pra cima + desfoque de 8px saindo. O padrão de tudo.</p><p class="mono texto-3 mt8">.anim-surgir</p></div>
+      <div class="card no-scroll anim-coluna"><p class="h6">surgir-coluna</p><p class="corpo-p mt8">clip-path revelando de baixo pra cima, como cortina.</p><p class="mono texto-3 mt8">.anim-coluna</p></div>
+      <div class="card no-scroll anim-lado"><p class="h6">surgir-lado</p><p class="corpo-p mt8">Entra da esquerda. Só em rótulo e título de seção.</p><p class="mono texto-3 mt8">.anim-lado</p></div>
+      <div class="card no-scroll anim-escala"><p class="h6">escalar-entrada</p><p class="corpo-p mt8">De 0.94 a 1. Para grade de itens pequenos.</p><p class="mono texto-3 mt8">.anim-escala</p></div>
+    </div>
+
+    <p class="rotulo mt32 no-scroll anim-lado">Escalonamento</p>
+    <div class="card mt16 no-scroll anim-surgir">
+      <div class="flex centro envolve gap8">
+        <span class="badge badge-neutro">.atraso-1 — 0.10s</span>
+        <span class="badge badge-neutro">.atraso-2 — 0.20s</span>
+        <span class="badge badge-neutro">.atraso-3 — 0.30s</span>
+        <span class="badge badge-neutro">.atraso-4 — 0.40s</span>
+        <span class="badge badge-neutro">.atraso-5 — 0.55s</span>
+        <span class="badge badge-neutro">.atraso-6 — 0.70s</span>
+        <span class="badge badge-neutro">.atraso-7 — 0.85s</span>
+      </div>
+      <p class="corpo-p mt16">Itens de uma mesma grade entram em cascata. Acima de 0.85s a pessoa já leu e o atraso vira travamento.</p>
+    </div>
+
+    <p class="rotulo mt32 no-scroll anim-lado">Contínuas</p>
+    <div class="grade g3 mt16">
+      <div class="card no-scroll anim-surgir">
+        <p class="h6">borda-girando · 2.5s</p>
+        <p class="corpo-p mt8">A conic-gradient do botão brilhante dá uma volta a cada 2.5s.</p>
+        <div class="mt16"><a class="btn-brilhante" href="#animacoes" style="padding:.7rem 1.6rem;font-size:.85rem"><span>Exemplo</span></a></div>
+      </div>
+      <div class="card no-scroll anim-surgir atraso-1">
+        <p class="h6">respirar / derivar</p>
+        <p class="corpo-p mt8">As manchas do fundo escalam e passeiam em ciclos de 14s a 26s, em fases diferentes — nunca repete o mesmo quadro.</p>
+        <div class="mt16" style="position:relative;height:70px;border-radius:14px;overflow:hidden;background:#05070C">
+          <div class="fundo-mancha b" style="position:absolute;width:200px;height:200px;top:-70px;left:10px;filter:blur(40px)"></div>
+        </div>
+      </div>
+      <div class="card no-scroll anim-surgir atraso-2">
+        <p class="h6">pulsar · 2.4s</p>
+        <p class="corpo-p mt8">O ponto de status. Único elemento com movimento infinito perto de texto.</p>
+        <div class="mt16"><span class="badge badge-solido"><span class="ponto"></span> online</span></div>
+      </div>
+    </div>
+
+    <p class="rotulo mt32 no-scroll anim-lado">Interação</p>
+    <div class="grade g3 mt16">
+      <div class="card card-luz no-scroll anim-surgir"><p class="h6">Luz que segue o cursor</p><p class="corpo-p mt8">240px de raio azul nascendo na posição do mouse. Passe o mouse neste card.</p><p class="mono texto-3 mt8">.card-luz</p></div>
+      <div class="card no-scroll anim-surgir atraso-1"><p class="h6">Elevação</p><p class="corpo-p mt8">-6px e sombra azul de 60px no hover. Sempre 0.4s, sempre a mesma curva.</p><p class="mono texto-3 mt8">.card:hover</p></div>
+      <div class="card no-scroll anim-surgir atraso-2"><p class="h6">Faixa infinita</p><p class="corpo-p mt8">Conteúdo duplicado e deslocado -50%: o loop não mostra buraco. Pausa no hover.</p><p class="mono texto-3 mt8">.faixa · .faixa-trilho</p></div>
+    </div>
+
+    <div class="card card-tracejado mt32 no-scroll anim-surgir">
+      <p class="h5">Movimento reduzido</p>
+      <p class="corpo-p mt8">
+        Quem liga "reduzir movimento" no sistema recebe a página <em>parada</em>, não
+        quebrada: as animações caem para 0.001ms e tudo continua visível. Partículas,
+        varredura e manchas somem. Essa é a única forma correta de usar
+        <span class="mono">prefers-reduced-motion</span> — desligar a animação sem
+        desligar o conteúdo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══ RODAPÉ ═════════════════════════════════════════════════════╗ -->
+<footer class="secao" style="padding-top:56px;padding-bottom:56px;text-align:center">
+  <div class="secao-interna">
+    <span class="marca" style="justify-content:center"><span class="marca-grade" aria-hidden="true"><i></i><i></i><i></i><i></i></span><strong style="font-family:var(--fonte-display)">Marcos Leonam</strong></span>
+    <p class="legenda mt12">Design system do site de serviços — preto e azul.</p>
+    <div class="flex centro gap16 mt24" style="justify-content:center">
+      <a class="btn-texto" href="./">Ver o site <svg class="icone icone-p"><use href="#i-seta"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script src="./ds/ds.js"></script>
+</body>
+</html>
