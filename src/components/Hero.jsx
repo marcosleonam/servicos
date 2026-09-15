@@ -64,7 +64,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             custom={3}
-            className="relative order-2 md:order-1"
+            className="relative"
           >
             <div
               aria-hidden="true"
@@ -77,7 +77,7 @@ export default function Hero() {
                 width="1080"
                 height="1350"
                 loading="eager"
-                className="aspect-4/5 w-full object-cover object-top"
+                className="aspect-[4/3] w-full object-cover object-top sm:aspect-[16/10] md:aspect-[4/5]"
               />
               {/* o pé da foto se dissolve no fundo em vez de cortar reto */}
               <div
@@ -99,7 +99,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             custom={4}
-            className="order-1 md:order-2"
+            className=""
           >
             <p className="mb-3 text-sm text-white/45">
               Não sabe por onde começar? Responde 3 perguntas — eu te digo o
