@@ -1,0 +1,14 @@
+Manrope — SIL Open Font License 1.1
+Copyright (c) 2018-2024 Mikhail Sharanda (github.com/sharanda/manrope)
+
+Esta família é distribuída sob a SIL Open Font License, Version 1.1.
+Texto integral da licença: https://openfontlicense.org
+
+Resumo do que a licença exige e permite:
+- uso livre, inclusive comercial, em site e material impresso;
+- redistribuição permitida desde que este aviso acompanhe os arquivos;
+- o software de fonte não pode ser vendido isoladamente;
+- versões modificadas não podem usar o nome reservado "Manrope".
+
+Arquivos neste diretório: manrope-latin.woff2, manrope-latin-ext.woff2
+(subconjuntos latin e latin-ext gerados pelo Google Fonts).
